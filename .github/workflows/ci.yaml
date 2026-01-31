@@ -26,18 +26,13 @@ jobs:
     name: Kubernetes Validation
     runs-on: ubuntu-latest
     steps:
+      - name: login to Github Packages
+        run: echo "${{ github.token }}" | docker login https://ghcr.io -u ${GITHUB_ACTOR} --password-stdin
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-      - uses: bmuschko/setup-kubeconform@1e2d81d44a6bb6d50c087ddf1ca46a54c7848cb3 # v1
+      - uses: docker://ghcr.io/yannh/kubeconform:latest
         with:
-          kubeconform-version: 0.6.7
-      - name: Validate manifests
-        run: |
-          SCHEMA_URL=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json
-
-          kubeconform -strict -summary \
-            -schema-location default \
-            -schema-location "$SCHEMA_URL" \
-            apps/*.yaml
+          entrypoint: "/kubeconform"
+          args: "-strict -summary -schema-location default -schema-location https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json apps/*.yaml"
 
   markdown:
     name: Markdown
