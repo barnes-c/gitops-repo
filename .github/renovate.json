@@ -1,0 +1,36 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":semanticCommits",
+        ":dependencyDashboard",
+        "helpers:pinGitHubActionDigests"
+    ],
+    "labels": [
+        "dependencies"
+    ],
+    "pinDigests": true,
+    "argocd": {
+        "fileMatch": [
+            "apps/.*\\.yaml$"
+        ]
+    },
+    "packageRules": [
+        {
+            "matchManagers": [
+                "github-actions"
+            ],
+            "groupName": "github-actions"
+        },
+        {
+            "matchManagers": [
+                "argocd"
+            ],
+            "groupName": "argocd-apps",
+            "labels": [
+                "dependencies",
+                "argocd"
+            ]
+        }
+    ]
+}
