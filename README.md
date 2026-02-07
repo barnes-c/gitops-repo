@@ -19,20 +19,24 @@ apps/                              # ArgoCD Application definitions
 ├── cilium.yaml                    # CNI + Gateway API controller
 ├── gateway-api-crds.yaml          # Gateway API CRDs (from upstream v1.4.1)
 ├── gateway.yaml                   # Gateway, HTTPRoutes, LB pool, L2 policy
-├── cert-manager.yaml              # TLS certificate management
+├── cert-manager.yaml              # TLS certificate management (Helm)
+├── cert-manager-config.yaml       # ClusterIssuer + Certificate resources
 ├── longhorn.yaml                  # Distributed storage
 ├── argocd.yaml                    # ArgoCD (self-managed)
 ├── monitoring.yaml                # Prometheus + Grafana
-└── other-apps.yaml                
+└── other-apps.yaml
 
 manifests/                         # Raw Kubernetes manifests
 ├── gateway-api-crds/              # Vendored Gateway API CRDs
 │   └── standard-install.yaml
+├── cert-manager/                  # cert-manager custom resources
+│   ├── clusterissuer.yaml         # Let's Encrypt ClusterIssuer (Cloudflare DNS-01)
+│   └── certificate.yaml           # Wildcard cert for *.barnes.biz
 └── gateway/                       # Gateway API resources
     ├── pool.yaml                  # CiliumLoadBalancerIPPool (192.168.1.201-210)
     ├── l2-policy.yaml             # CiliumL2AnnouncementPolicy
-    ├── gateway.yaml               # Shared HTTP Gateway (port 80)
-    ├── other-routes.yaml          # e.g. argocd.homelab.internal → ArgoCD UI
+    ├── gateway.yaml               # Shared Gateway (HTTP :80 + HTTPS :443)
+    ├── other-routes.yaml          # e.g. argocd.barnes.biz → ArgoCD UI
 ```
 
 ## Deployment Order
@@ -44,25 +48,44 @@ Applications deploy in order via [sync waves](https://argo-cd.readthedocs.io/en/
 | -3   | Cilium           | CNI / networking           |
 | -2   | Gateway API CRDs | Gateway API definitions    |
 | -2   | Longhorn         | Storage                    |
-| -1   | Cert-Manager     | TLS certificates           |
+| -1   | Cert-Manager     | TLS certificates (Helm)    |
 | -1   | Gateway          | Gateway API infrastructure |
+| 0    | Cert-Manager Config | ClusterIssuer + Certs   |
 | 0    | ArgoCD           | GitOps controller          |
 | 0    | Monitoring       | Prometheus + Grafana       |
 | 1    | Other apps       | Application workloads      |
+
+## Secrets (not versioned)
+
+These secrets must be created manually before the corresponding applications will work:
+
+| Secret | Namespace | Key | Purpose |
+|--------|-----------|-----|---------|
+| `cloudflare-api-token` | `cert-manager` | `api-token` | Cloudflare API token for DNS-01 challenges |
+
+Create the Cloudflare token in the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens) with permissions:
+
+- **Zone: Zone: Read**
+- **Zone: DNS: Edit**
+
+```bash
+kubectl create secret generic cloudflare-api-token \
+  --namespace cert-manager \
+  --from-literal=api-token=<CLOUDFLARE_API_TOKEN>
+```
+
+## TLS
+
+Certificates are issued by [Let's Encrypt](https://letsencrypt.org/) using DNS-01 challenges via Cloudflare. A wildcard certificate (`*.barnes.biz`) is stored as the `barnes-biz-tls` secret in the `gateway` namespace and referenced by the Gateway's HTTPS listener. TLS terminates at the Gateway; backends receive plain HTTP.
 
 ## Networking
 
 Traffic is routed via [Cilium Gateway API](https://docs.cilium.io/en/stable/network/servicemesh/gateway-api/gateway-api/):
 
 - Cilium assigns LoadBalancer IPs from `192.168.1.201-210` and announces them on the LAN via L2/ARP
-- A shared `Gateway` listens on port 80
+- A shared `Gateway` listens on HTTP (:80) and HTTPS (:443)
 - `HTTPRoute` resources route traffic by hostname to backend services
-
-To access services, add the Gateway IP to `/etc/hosts`:
-
-```bash
-192.168.1.201  argocd.homelab.internal  grafana.homelab.internal
-```
+- DNS for `*.barnes.biz` points to `192.168.1.201`
 
 ### Adding a New Route
 
@@ -76,17 +99,24 @@ metadata:
   namespace: my-app-namespace
 spec:
   parentRefs:
-    - name: main
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main
       namespace: gateway
   hostnames:
-    - my-app.homelab.internal
+    - my-app.barnes.biz
   rules:
-    - backendRefs:
-        - name: my-app-service
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: my-app-service
           port: 80
+          weight: 1
 ```
-
-Then add the hostname to `/etc/hosts`.
 
 ## Adding a New Application
 

@@ -5,11 +5,20 @@ metadata:
   namespace: monitoring
 spec:
   parentRefs:
-    - name: main
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main
       namespace: gateway
   hostnames:
     - grafana.barnes.biz
   rules:
-    - backendRefs:
-        - name: monitoring-grafana
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: monitoring-grafana
           port: 80
+          weight: 1
