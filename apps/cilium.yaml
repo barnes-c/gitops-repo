@@ -47,6 +47,9 @@ spec:
         bpf:
           hostLegacyRouting: true
 
+        l2announcements:
+          enabled: true
+
         gatewayAPI:
           enabled: true
 
