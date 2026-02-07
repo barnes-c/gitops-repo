@@ -1,0 +1,101 @@
+# GitOps Repository
+
+## How It Works
+
+The [infra repo](https://github.com/barnes-c/infra) uses OpenTofu to bootstrap the Talos cluster, install Cilium CNI, and deploy ArgoCD. ArgoCD then takes over and syncs everything in this repository automatically.
+
+```txt
+OpenTofu (infra repo)          ArgoCD (this repo)
+─────────────────────          ──────────────────
+Talos cluster         ──►      apps-root Application
+Cilium (bootstrap)             watches apps/ directory
+ArgoCD (bootstrap)             syncs all Applications
+```
+
+## Repository Structure
+
+```bash
+apps/                              # ArgoCD Application definitions
+├── cilium.yaml                    # CNI + Gateway API controller
+├── gateway-api-crds.yaml          # Gateway API CRDs (from upstream v1.4.1)
+├── gateway.yaml                   # Gateway, HTTPRoutes, LB pool, L2 policy
+├── cert-manager.yaml              # TLS certificate management
+├── longhorn.yaml                  # Distributed storage
+├── argocd.yaml                    # ArgoCD (self-managed)
+├── monitoring.yaml                # Prometheus + Grafana
+└── immich.yaml                    # Photo management
+
+manifests/                         # Raw Kubernetes manifests
+├── gateway-api-crds/              # Vendored Gateway API CRDs
+│   └── standard-install.yaml
+└── gateway/                       # Gateway API resources
+    ├── pool.yaml                  # CiliumLoadBalancerIPPool (192.168.1.201-210)
+    ├── l2-policy.yaml             # CiliumL2AnnouncementPolicy
+    ├── gateway.yaml               # Shared HTTP Gateway (port 80)
+    ├── argocd-route.yaml          # argocd.homelab.internal → ArgoCD UI
+    └── grafana-route.yaml         # grafana.homelab.internal → Grafana
+```
+
+## Deployment Order
+
+Applications deploy in order via [sync waves](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/):
+
+| Wave | Application      | Purpose                    |
+|------|------------------|----------------------------|
+| -3   | Cilium           | CNI / networking           |
+| -2   | Gateway API CRDs | Gateway API definitions    |
+| -2   | Longhorn         | Storage                    |
+| -1   | Cert-Manager     | TLS certificates           |
+| -1   | Gateway          | Gateway API infrastructure |
+| 0    | ArgoCD           | GitOps controller          |
+| 0    | Monitoring       | Prometheus + Grafana       |
+| 1    | Other apps       | Application workloads      |
+
+## Networking
+
+Traffic is routed via [Cilium Gateway API](https://docs.cilium.io/en/stable/network/servicemesh/gateway-api/gateway-api/):
+
+- Cilium assigns LoadBalancer IPs from `192.168.1.201-210` and announces them on the LAN via L2/ARP
+- A shared `Gateway` listens on port 80
+- `HTTPRoute` resources route traffic by hostname to backend services
+
+To access services, add the Gateway IP to `/etc/hosts`:
+
+```bash
+192.168.1.201  argocd.homelab.internal  grafana.homelab.internal
+```
+
+### Adding a New Route
+
+Create an HTTPRoute in `manifests/gateway/`:
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: my-app
+  namespace: my-app-namespace
+spec:
+  parentRefs:
+    - name: main
+      namespace: gateway
+  hostnames:
+    - my-app.homelab.internal
+  rules:
+    - backendRefs:
+        - name: my-app-service
+          port: 80
+```
+
+Then add the hostname to `/etc/hosts`.
+
+## Adding a New Application
+
+1. Create a YAML file in `apps/` with an ArgoCD Application definition
+2. Set the appropriate `sync-wave` annotation
+3. Push — ArgoCD will pick it up automatically
+
+## Dependencies
+
+- [infra](https://github.com/barnes-c/infra) — OpenTofu code for Talos cluster bootstrap
+- Dependency updates are managed by [Renovate](https://github.com/renovatebot/renovate)
