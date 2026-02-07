@@ -15,6 +15,11 @@
             "apps/.*\\.yaml$"
         ]
     },
+    "kubernetes": {
+        "fileMatch": [
+            "manifests/.*\\.yaml$"
+        ]
+    },
     "packageRules": [
         {
             "matchManagers": [
@@ -31,6 +36,12 @@
                 "dependencies",
                 "argocd"
             ]
+        },
+        {
+            "matchUpdateTypes": [
+                "patch"
+            ],
+            "automerge": true
         }
     ]
 }
