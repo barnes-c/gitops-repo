@@ -10,9 +10,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kubernetes-sigs/gateway-api
-    targetRevision: v1.4.1
-    path: config/crd/standard
+    repoURL: https://github.com/barnes-c/gitops-repo
+    targetRevision: main
+    path: manifests/gateway-api-crds
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
