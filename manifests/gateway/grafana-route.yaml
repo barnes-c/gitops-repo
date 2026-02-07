@@ -8,7 +8,7 @@ spec:
     - name: main
       namespace: gateway
   hostnames:
-    - grafana.homelab.internal
+    - grafana.barnes.biz
   rules:
     - backendRefs:
         - name: monitoring-grafana

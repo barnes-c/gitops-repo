@@ -23,7 +23,7 @@ apps/                              # ArgoCD Application definitions
 ├── longhorn.yaml                  # Distributed storage
 ├── argocd.yaml                    # ArgoCD (self-managed)
 ├── monitoring.yaml                # Prometheus + Grafana
-└── immich.yaml                    # Photo management
+└── other-apps.yaml                
 
 manifests/                         # Raw Kubernetes manifests
 ├── gateway-api-crds/              # Vendored Gateway API CRDs
@@ -32,8 +32,7 @@ manifests/                         # Raw Kubernetes manifests
     ├── pool.yaml                  # CiliumLoadBalancerIPPool (192.168.1.201-210)
     ├── l2-policy.yaml             # CiliumL2AnnouncementPolicy
     ├── gateway.yaml               # Shared HTTP Gateway (port 80)
-    ├── argocd-route.yaml          # argocd.homelab.internal → ArgoCD UI
-    └── grafana-route.yaml         # grafana.homelab.internal → Grafana
+    ├── other-routes.yaml          # e.g. argocd.homelab.internal → ArgoCD UI
 ```
 
 ## Deployment Order
