@@ -66,3 +66,4 @@ jobs:
           scan-type: config
           exit-code: 1
           trivy-config: .github/trivy.yaml
+          trivyignores: .github/.trivyignore.yaml

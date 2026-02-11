@@ -7,6 +7,3 @@ misconfiguration:
   scanners:
     - kubernetes
     - helm
-
-skip-checks:
-  - AVD-KSV-0125 # ghcr.io and Docker Hub are fine
