@@ -19,6 +19,6 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: blocky-helm-ui
-          port: 8002
+          name: blocky
+          port: 4000
           weight: 1

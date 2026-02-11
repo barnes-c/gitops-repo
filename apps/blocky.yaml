@@ -10,23 +10,46 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://dan1el-k.github.io/blocky-helm
-    chart: blocky-helm
-    targetRevision: 1.0.10
+    repoURL: https://johanneskastl.github.io/helm-charts
+    chart: blocky
+    targetRevision: 11.13.0
     helm:
       values: |
         env:
-          - name: TZ
-            value: "Europe/Zurich"
+          TZ: Europe/Zurich
 
         service:
-          type: LoadBalancer
-          loadBalancerIP: "192.168.1.202"
-          externalTrafficPolicy: Local
+          main:
+            enabled: true
+            ports:
+              http:
+                port: 4000
+          dns:
+            enabled: true
+            type: LoadBalancer
+            loadBalancerIP: "192.168.1.202"
+            externalTrafficPolicy: Local
+            ports:
+              dns-tcp:
+                enabled: true
+                port: 53
+                protocol: TCP
+                targetPort: 53
+              dns-udp:
+                enabled: true
+                port: 53
+                protocol: UDP
+                targetPort: 53
 
-        config:
-          ports:
-            dns: 53
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: false
+
+        redis:
+          enabled: false
+
+        config: |
           upstreams:
             groups:
               default:
@@ -64,19 +87,9 @@ spec:
           prometheus:
             enable: true
             path: /metrics
-
-        ui:
-          enabled: true
-          service:
-            enabled: true
-            type: ClusterIP
-            port: 8002
-
-        redis:
-          enabled: false
-
-        k8sGateway:
-          enabled: false
+          ports:
+            dns: 53
+            http: 4000
   destination:
     server: https://kubernetes.default.svc
     namespace: blocky
