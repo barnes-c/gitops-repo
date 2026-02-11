@@ -77,7 +77,9 @@ kubectl create secret generic cloudflare-api-token \
 
 ## TLS
 
-Certificates are issued by [Let's Encrypt](https://letsencrypt.org/) using DNS-01 challenges via Cloudflare. A wildcard certificate (`*.barnes.biz`) is stored as the `barnes-biz-tls` secret in the `gateway` namespace and referenced by the Gateway's HTTPS listener. TLS terminates at the Gateway; backends receive plain HTTP.
+Certificates are issued by [Let's Encrypt](https://letsencrypt.org/) using DNS-01 challenges via Cloudflare.
+A wildcard certificate (`*.barnes.biz`) is stored as the `barnes-biz-tls` secret in the `gateway` namespace and
+referenced by the Gateway's HTTPS listener. TLS terminates at the Gateway; backends receive plain HTTP.
 
 ## Networking
 
