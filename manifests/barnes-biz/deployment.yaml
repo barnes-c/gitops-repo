@@ -51,10 +51,18 @@ spec:
               mountPath: /var/run
             - name: nginx-log
               mountPath: /var/log/nginx
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: nginx-cache
           emptyDir: {}
         - name: nginx-run
           emptyDir: {}
         - name: nginx-log
+          emptyDir: {}
+        - name: nginx-conf
+          emptyDir: {}
+        - name: tmp
           emptyDir: {}

@@ -33,6 +33,7 @@ spec:
             limits:
               memory: 256Mi
           securityContext:
+            runAsUser: 65532
             runAsNonRoot: true
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
