@@ -2,7 +2,7 @@
 extends: default
 
 ignore: |
-  /manifests/gateway-api-crds/standard-install.yaml
+  manifests/gateway-api-crds/standard-install.yaml
 
 rules:
   line-length:
