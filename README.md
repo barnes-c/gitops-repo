@@ -2,7 +2,8 @@
 
 ## How It Works
 
-The [infra repo](https://github.com/barnes-c/infra) uses OpenTofu to bootstrap the Talos cluster, install Cilium CNI, and deploy ArgoCD. ArgoCD then takes over and syncs everything in this repository automatically.
+The [infra repo](https://github.com/barnes-c/infra) uses OpenTofu to bootstrap the Talos cluster, install Cilium CNI,
+and deploy ArgoCD. ArgoCD then takes over and syncs everything in this repository automatically.
 
 ```txt
 OpenTofu (infra repo)          ArgoCD (this repo)
@@ -43,24 +44,24 @@ manifests/                         # Raw Kubernetes manifests
 
 Applications deploy in order via [sync waves](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/):
 
-| Wave | Application      | Purpose                    |
-|------|------------------|----------------------------|
-| -3   | Cilium           | CNI / networking           |
-| -2   | Gateway API CRDs | Gateway API definitions    |
-| -2   | Longhorn         | Storage                    |
-| -1   | Cert-Manager     | TLS certificates (Helm)    |
-| -1   | Gateway          | Gateway API infrastructure |
-| 0    | Cert-Manager Config | ClusterIssuer + Certs   |
-| 0    | ArgoCD           | GitOps controller          |
-| 0    | Monitoring       | Prometheus + Grafana       |
-| 1    | Other apps       | Application workloads      |
+| Wave | Application        | Purpose                    |
+|------|--------------------|----------------------------|
+| -3   | Cilium             | CNI / networking           |
+| -2   | Gateway API CRDs   | Gateway API definitions    |
+| -2   | Longhorn           | Storage                    |
+| -1   | Cert-Manager       | TLS certificates (Helm)    |
+| -1   | Gateway            | Gateway API infrastructure |
+| 0    | Cert-Manager Config| ClusterIssuer + Certs      |
+| 0    | ArgoCD             | GitOps controller          |
+| 0    | Monitoring         | Prometheus + Grafana       |
+| 1    | Other apps         | Application workloads      |
 
 ## Secrets (not versioned)
 
 These secrets must be created manually before the corresponding applications will work:
 
-| Secret | Namespace | Key | Purpose |
-|--------|-----------|-----|---------|
+| Secret                 | Namespace      | Key         | Purpose                                    |
+|------------------------|----------------|-------------|--------------------------------------------|
 | `cloudflare-api-token` | `cert-manager` | `api-token` | Cloudflare API token for DNS-01 challenges |
 
 Create the Cloudflare token in the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens) with permissions:
