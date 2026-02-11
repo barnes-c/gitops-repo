@@ -13,6 +13,9 @@ spec:
       labels:
         app: website
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: website
           image: ghcr.io/barnes-c/website:latest
