@@ -9,12 +9,13 @@ watches this directory and automatically syncs any Application added here.
 
 Applications are deployed in order using `argocd.argoproj.io/sync-wave` annotations:
 
-| Wave | Application  | Purpose                    |
-|------|--------------|----------------------------|
-| -3   | Cilium       | CNI / networking           |
-| -2   | Longhorn     | Storage                    |
-| -1   | Cert-Manager | TLS certificates           |
-| -1   | Gateway      | Gateway API infrastructure |
-| 0    | ArgoCD       | GitOps controller          |
-| 0    | Monitoring   | Prometheus + Grafana       |
-| 1    | Immich       | Application workloads      |
+| Wave | Application     | Purpose                    |
+|------|-----------------|----------------------------|
+| -3   | Cilium          | CNI / networking           |
+| -2   | Longhorn        | Storage                    |
+| -1   | Cert-Manager    | TLS certificates           |
+| -1   | Gateway         | Gateway API infrastructure |
+| -1   | Sealed Secrets  | Secret encryption          |
+| 0    | ArgoCD          | GitOps controller          |
+| 0    | Monitoring      | Prometheus + Grafana       |
+| 1    | Other Apps      | Websites, immich, minecraft|

@@ -56,30 +56,26 @@ Applications deploy in order via [sync waves](https://argo-cd.readthedocs.io/en/
 | 0    | Monitoring         | Prometheus + Grafana       |
 | 1    | Other apps         | Application workloads      |
 
-## Secrets (not versioned)
+## Secrets
 
-These secrets must be created manually before the corresponding applications will work:
+Secrets are encrypted with [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) and stored
+as `SealedSecret` resources in Git. The controller (deployed at sync wave `-1`) decrypts them in-cluster.
 
-| Secret                 | Namespace      | Key         | Purpose                                    |
-|------------------------|----------------|-------------|--------------------------------------------|
-| `cloudflare-api-token` | `cert-manager` | `api-token` | Cloudflare API token for DNS-01 challenges |
-
-Create the Cloudflare token in the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens) with permissions:
-
-- **Zone: Zone: Read**
-- **Zone: DNS: Edit**
+To add or rotate a secret:
 
 ```bash
-kubectl create secret generic cloudflare-api-token \
-  --namespace cert-manager \
-  --from-literal=api-token=<CLOUDFLARE_API_TOKEN>
+kubectl create secret generic <name> \
+  --namespace <namespace> \
+  --from-literal=<key>=<value> \
+  --dry-run=client -o yaml | \
+  kubeseal --controller-namespace sealed-secrets -o yaml \
+  > manifests/<app>/sealed-<name>.yaml
 ```
 
-## TLS
-
-Certificates are issued by [Let's Encrypt](https://letsencrypt.org/) using DNS-01 challenges via Cloudflare.
-A wildcard certificate (`*.barnes.biz`) is stored as the `barnes-biz-tls` secret in the `gateway` namespace and
-referenced by the Gateway's HTTPS listener. TLS terminates at the Gateway; backends receive plain HTTP.
+| SealedSecret             | Namespace      | Key            | Purpose                                    |
+|--------------------------|----------------|----------------|--------------------------------------------|
+| `cloudflare-api-token`   | `cert-manager` | `api-token`    | Cloudflare API token for DNS-01 challenges |
+| `cloudflared-tunnel`     | `barnes-biz`   | `TUNNEL_TOKEN` | Cloudflare Tunnel token for public access  |
 
 ## Networking
 
