@@ -9,4 +9,4 @@ misconfiguration:
     - helm
   kubernetes:
     exclude:
-      - KSV125 # disabled so I can use ghcr and pull my own images
+      - KSV0125 # disabled so I can use ghcr and pull my own images
