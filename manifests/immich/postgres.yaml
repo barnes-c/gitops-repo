@@ -20,7 +20,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: postgres
-          image: tensorchord/pgvecto-rs:pg16-v0.2.0
+          image: tensorchord/pgvecto-rs:pg16-v0.2.0@sha256:592cac7b88a6443a9b06dfc0248b847ee3b20971244be3ea9bf259b01fe1621e
           envFrom:
             - secretRef:
                 name: immich-postgres-credentials
