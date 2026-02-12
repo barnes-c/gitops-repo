@@ -16,13 +16,19 @@ spec:
       targetRevision: 0.10.3
       helm:
         values: |
+          env:
+            DB_HOSTNAME: immich-postgres
+            DB_PORT: "5432"
+            DB_DATABASE_NAME: immich
+
+          envFrom:
+            - secretRef:
+                name: immich-postgres-credentials
+
           immich:
             persistence:
               library:
                 existingClaim: immich-library
-
-          postgresql:
-            enabled: true
 
           valkey:
             enabled: true
