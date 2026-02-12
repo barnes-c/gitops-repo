@@ -50,7 +50,7 @@ data:
           client_type: confidential
           client_id: !Env GRAFANA_CLIENT_ID
           client_secret: !Env GRAFANA_CLIENT_SECRET
-          redirect_uris: "https://grafana.barnes.biz/login/generic_oauth"
+          redirect_uris: "https://monitoring.barnes.biz/login/generic_oauth"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
             - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-openid]]
@@ -65,7 +65,7 @@ data:
           name: Grafana
           slug: grafana
           provider: !KeyOf grafana-provider
-          meta_launch_url: https://grafana.barnes.biz
+          meta_launch_url: https://monitoring.barnes.biz
 
       # ArgoCD
       - model: authentik_providers_oauth2.oauth2provider
@@ -77,7 +77,7 @@ data:
           client_type: confidential
           client_id: !Env ARGOCD_CLIENT_ID
           client_secret: !Env ARGOCD_CLIENT_SECRET
-          redirect_uris: "https://argocd.barnes.biz/api/dex/callback"
+          redirect_uris: "https://argo.barnes.biz/api/dex/callback"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
             - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-openid]]
@@ -92,7 +92,7 @@ data:
           name: ArgoCD
           slug: argocd
           provider: !KeyOf argocd-provider
-          meta_launch_url: https://argocd.barnes.biz
+          meta_launch_url: https://argo.barnes.biz
 
       # Immich
       - model: authentik_providers_oauth2.oauth2provider

@@ -29,7 +29,7 @@ spec:
                     id: authentik
                     name: Authentik
                     config:
-                      issuer: https://authentik.barnes.biz/application/o/argocd/
+                      issuer: https://auth.barnes.biz/application/o/argocd/
                       clientID: $argocd-oidc:dex.authentik.clientID
                       clientSecret: $argocd-oidc:dex.authentik.clientSecret
                       insecureEnableGroups: true
