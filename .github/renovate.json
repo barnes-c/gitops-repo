@@ -17,13 +17,13 @@
         }
     ],
     "argocd": {
-        "fileMatch": [
-            "apps/.*\\.yaml$"
+        "managerFilePatterns": [
+            "/apps/.*\\.yaml$/"
         ]
     },
     "kubernetes": {
-        "fileMatch": [
-            "manifests/.*\\.yaml$"
+        "managerFilePatterns": [
+            "/manifests/.*\\.yaml$/"
         ]
     },
     "packageRules": [
