@@ -21,7 +21,7 @@ spec:
             envFromSecret: grafana-oidc
             grafana.ini:
               server:
-                root_url: https://grafana.barnes.biz
+                root_url: https://monitoring.barnes.biz
               auth.generic_oauth:
                 enabled: true
                 name: Authentik

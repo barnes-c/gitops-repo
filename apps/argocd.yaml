@@ -22,7 +22,7 @@ spec:
             params:
               server.insecure: true
             cm:
-              url: https://argocd.barnes.biz
+              url: https://argo.barnes.biz
               dex.config: |
                 connectors:
                   - type: oidc
