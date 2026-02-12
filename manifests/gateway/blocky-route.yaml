@@ -9,6 +9,7 @@ spec:
       kind: Gateway
       name: main
       namespace: gateway
+      sectionName: https
   hostnames:
     - blocky.barnes.biz
   rules:
