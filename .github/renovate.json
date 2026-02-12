@@ -44,6 +44,15 @@
             ]
         },
         {
+            "matchManagers": [
+                "argocd"
+            ],
+            "matchDepNames": [
+                "https://github.com/barnes-c/gitops-repo"
+            ],
+            "enabled": false
+        },
+        {
             "matchUpdateTypes": [
                 "patch"
             ],
