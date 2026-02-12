@@ -13,8 +13,7 @@
     "hostRules": [
         {
             "matchHost": "ghcr.io",
-            "username": "barnes-c",
-            "password": "{{ secrets.GITHUB_TOKEN }}"
+            "hostType": "docker"
         }
     ],
     "argocd": {
