@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://immich-app.github.io/immich-charts
     chart: immich
-    targetRevision: 0.4.0
+    targetRevision: 0.10.3
     helm:
       values: |
         # Configure your Immich values here
