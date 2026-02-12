@@ -10,6 +10,13 @@
         "dependencies"
     ],
     "pinDigests": true,
+    "hostRules": [
+        {
+            "matchHost": "ghcr.io",
+            "username": "barnes-c",
+            "password": "{{ secrets.GITHUB_TOKEN }}"
+        }
+    ],
     "argocd": {
         "fileMatch": [
             "apps/.*\\.yaml$"
