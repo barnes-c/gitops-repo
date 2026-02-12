@@ -32,10 +32,13 @@ spec:
                   envFrom:
                     - secretRef:
                         name: immich-postgres-credentials
-            machine-learning:
-              pod:
-                nodeSelector:
-                  workload/ml: "true"
+
+          machine-learning:
+            controllers:
+              main:
+                pod:
+                  nodeSelector:
+                    workload/ml: "true"
 
           valkey:
             enabled: true
