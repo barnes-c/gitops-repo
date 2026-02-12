@@ -15,9 +15,18 @@ spec:
       labels:
         app: immich-postgres
     spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: postgres
           image: tensorchord/pgvecto-rs:pg16-v0.2.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           envFrom:
             - secretRef:
                 name: immich-postgres-credentials
