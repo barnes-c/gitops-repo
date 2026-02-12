@@ -7,22 +7,25 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
-  source:
-    repoURL: https://immich-app.github.io/immich-charts
-    chart: immich
-    targetRevision: 0.10.3
-    helm:
-      values: |
-        immich:
-          persistence:
-            library:
-              existingClaim: immich-library
+  sources:
+    - repoURL: https://github.com/barnes-c/gitops-repo
+      targetRevision: main
+      path: manifests/immich
+    - repoURL: https://immich-app.github.io/immich-charts
+      chart: immich
+      targetRevision: 0.10.3
+      helm:
+        values: |
+          immich:
+            persistence:
+              library:
+                existingClaim: immich-library
 
-        postgresql:
-          enabled: true
+          postgresql:
+            enabled: true
 
-        valkey:
-          enabled: true
+          valkey:
+            enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: immich
