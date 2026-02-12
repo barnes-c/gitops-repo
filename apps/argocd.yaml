@@ -9,23 +9,47 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://argoproj.github.io/argo-helm
-    chart: argo-cd
-    targetRevision: 9.4.1
-    helm:
-      values: |
-        configs:
-          params:
-            server.insecure: true
-        server:
-          replicas: 1
-        controller:
-          replicas: 1
-        repoServer:
-          replicas: 1
-        applicationSet:
-          replicas: 1
+  sources:
+    - repoURL: https://github.com/barnes-c/gitops-repo
+      targetRevision: main
+      path: manifests/argocd
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 9.4.1
+      helm:
+        values: |
+          configs:
+            params:
+              server.insecure: true
+            cm:
+              url: https://argocd.barnes.biz
+              dex.config: |
+                connectors:
+                  - type: oidc
+                    id: authentik
+                    name: Authentik
+                    config:
+                      issuer: https://authentik.barnes.biz/application/o/argocd/
+                      clientID: $argocd-oidc:dex.authentik.clientID
+                      clientSecret: $argocd-oidc:dex.authentik.clientSecret
+                      insecureEnableGroups: true
+                      scopes:
+                        - openid
+                        - profile
+                        - email
+                        - groups
+            rbac:
+              policy.csv: |
+                g, ArgoCD Admins, role:admin
+              policy.default: role:readonly
+          server:
+            replicas: 1
+          controller:
+            replicas: 1
+          repoServer:
+            replicas: 1
+          applicationSet:
+            replicas: 1
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

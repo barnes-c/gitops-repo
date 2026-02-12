@@ -7,17 +7,35 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
-  source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    chart: kube-prometheus-stack
-    targetRevision: 81.6.3
-    helm:
-      values: |
-        grafana:
-          enabled: true
-        prometheus:
-          prometheusSpec:
-            retention: 7d
+  sources:
+    - repoURL: https://github.com/barnes-c/gitops-repo
+      targetRevision: main
+      path: manifests/monitoring
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 81.6.3
+      helm:
+        values: |
+          grafana:
+            enabled: true
+            envFromSecret: grafana-oidc
+            grafana.ini:
+              server:
+                root_url: https://grafana.barnes.biz
+              auth.generic_oauth:
+                enabled: true
+                name: Authentik
+                allow_sign_up: true
+                client_id: ${GF_AUTH_GENERIC_OAUTH_CLIENT_ID}
+                client_secret: ${GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}
+                scopes: openid profile email
+                auth_url: https://authentik.barnes.biz/application/o/authorize/
+                token_url: https://authentik.barnes.biz/application/o/token/
+                api_url: https://authentik.barnes.biz/application/o/userinfo/
+                role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
+          prometheus:
+            prometheusSpec:
+              retention: 7d
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

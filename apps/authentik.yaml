@@ -20,11 +20,31 @@ spec:
             envFrom:
               - secretRef:
                   name: authentik-credentials
+              - secretRef:
+                  name: authentik-oidc-clients
 
           authentik:
             secret_key: ""
             postgresql:
               password: ""
+
+          server:
+            volumes:
+              - name: custom-blueprints
+                configMap:
+                  name: authentik-blueprints
+            volumeMounts:
+              - name: custom-blueprints
+                mountPath: /blueprints/custom
+
+          worker:
+            volumes:
+              - name: custom-blueprints
+                configMap:
+                  name: authentik-blueprints
+            volumeMounts:
+              - name: custom-blueprints
+                mountPath: /blueprints/custom
 
           postgresql:
             enabled: true

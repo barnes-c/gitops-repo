@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-blueprints
+  namespace: authentik
+data:
+  sso.yaml: |
+    version: 1
+    metadata:
+      name: SSO Applications
+
+    entries:
+      # Groups
+      - model: authentik_core.group
+        id: grafana-admins
+        state: present
+        attrs:
+          name: Grafana Admins
+
+      - model: authentik_core.group
+        id: grafana-editors
+        state: present
+        attrs:
+          name: Grafana Editors
+
+      - model: authentik_core.group
+        id: argocd-admins
+        state: present
+        attrs:
+          name: ArgoCD Admins
+
+      # Custom scope mapping for groups claim
+      - model: authentik_providers_oauth2.scopemapping
+        id: groups-scope
+        state: present
+        attrs:
+          name: "OAuth2 Groups"
+          scope_name: groups
+          description: "User's group memberships"
+          expression: |
+            return [group.name for group in request.user.ak_groups.all()]
+
+      # Grafana
+      - model: authentik_providers_oauth2.oauth2provider
+        id: grafana-provider
+        state: present
+        attrs:
+          name: Grafana
+          authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
+          client_type: confidential
+          client_id: !Env GRAFANA_CLIENT_ID
+          client_secret: !Env GRAFANA_CLIENT_SECRET
+          redirect_uris: "https://grafana.barnes.biz/login/generic_oauth"
+          signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
+          property_mappings:
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-openid]]
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-email]]
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-profile]]
+            - !KeyOf groups-scope
+
+      - model: authentik_core.application
+        id: grafana-app
+        state: present
+        attrs:
+          name: Grafana
+          slug: grafana
+          provider: !KeyOf grafana-provider
+          meta_launch_url: https://grafana.barnes.biz
+
+      # ArgoCD
+      - model: authentik_providers_oauth2.oauth2provider
+        id: argocd-provider
+        state: present
+        attrs:
+          name: ArgoCD
+          authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
+          client_type: confidential
+          client_id: !Env ARGOCD_CLIENT_ID
+          client_secret: !Env ARGOCD_CLIENT_SECRET
+          redirect_uris: "https://argocd.barnes.biz/api/dex/callback"
+          signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
+          property_mappings:
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-openid]]
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-email]]
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-profile]]
+            - !KeyOf groups-scope
+
+      - model: authentik_core.application
+        id: argocd-app
+        state: present
+        attrs:
+          name: ArgoCD
+          slug: argocd
+          provider: !KeyOf argocd-provider
+          meta_launch_url: https://argocd.barnes.biz
+
+      # Immich
+      - model: authentik_providers_oauth2.oauth2provider
+        id: immich-provider
+        state: present
+        attrs:
+          name: Immich
+          authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
+          client_type: confidential
+          client_id: !Env IMMICH_CLIENT_ID
+          client_secret: !Env IMMICH_CLIENT_SECRET
+          redirect_uris: |-
+            https://immich.barnes.biz/auth/login
+            app.immich:/
+          signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
+          property_mappings:
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-openid]]
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-email]]
+            - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-profile]]
+
+      - model: authentik_core.application
+        id: immich-app
+        state: present
+        attrs:
+          name: Immich
+          slug: immich
+          provider: !KeyOf immich-provider
+          meta_launch_url: https://immich.barnes.biz

@@ -1,0 +1,23 @@
+{
+  "kind": "SealedSecret",
+  "apiVersion": "bitnami.com/v1alpha1",
+  "metadata": {
+    "name": "argocd-oidc",
+    "namespace": "argocd"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "name": "argocd-oidc",
+        "namespace": "argocd",
+        "labels": {
+          "app.kubernetes.io/part-of": "argocd"
+        }
+      }
+    },
+    "encryptedData": {
+      "dex.authentik.clientID": "AgAZUExaMxQ89m5WYUtMmeBlxtZkk1K5zB3FMFn7hHOoUjU+h4tUui4TTmsVxoEsmdDl2ZIBasy5cmz6H3kUgPWdeIFg/KI/GZRno4pQDJ2Y2/lFULW1xvCpBDIk08OPXTatJHbK+IhA52y2RC4uph1Y3mP4/eJ8ymIsQWoV9lygvHN+aoFrflRH2ftOVqaEhUohi0QpgP2rPeP6wV6cNZmlfyKANtsX1VJRsRWIzP2UIxlClvzShDwZi+80+K9Wm43mumKjbbTiqGulX4CJkCxHwxSlmc0s/EHHH3XT3Lj9eh9F/8Yj6Ik/nzYaNFdG5KmBodaAOWWbEkkBXdIfUxYLT/gHWf/jpli7ikmd4crSh7HmqiC4hJ5R8TYZcyas/fv8IHAg2eX3zYs/pN1MT3PR4BF+doAQKwcKbMP4TLsBUR4sK7a1/UR2ydk089HFtMoDAJnLBliISE5MCzmowO8sbSy02jRB7bOa2q/HPeAYIYWacGEfvkH+82YcV+IzPomMzV9VwTMfhp57xx5hyGpzF1MfM1HoOtN4ymp6/egXiTRlOnTPb/yZZtqGELhYPkHXW2sjI1ibNE0FZL2Ix6sP+HnebLEzVQyw7qTV+xHHmeFeaT3OTyvhcmllIiy0wZc25f2eLaeBpueiq3t8vH0WS5S8ZSL4iBqQBE+BlVuWVVEMSlr/UNCxlN7y0L1MWo0Vm9uYpNUKJ5D93tZv7UifORKJ4SCV/s4O44Bli5iKXCTuxKnbcBxI",
+      "dex.authentik.clientSecret": "AgDBvZyZWoiu3Ck7KxU2WNBqI5EhCLzNX+CaaSFWMTjDbAJUidzwGM3+SpFcc18TpT7bc83DDrD2LDMCMGvDtoXrNqR9NEhm56zseKhFpoXGpg0Y2KsrrYloSEJTGaB2w/r98ZlPPAfMc+b9l+hqUVlP0RZv+niwuJr2G8fKHhuCizgt6QWTIRQaM08iR7XwhvS32FbBIrvzi+81WN+GN865FiDO4yWVm0FLrjJORXgD9M/6zW76Ow3fguDbbtLIbrjv3bFcirGjoFpivr4ZLea0rDhDyEMewwhhCwTtsU0+a0BsMCYRl7WsYUgP725dzEuDcjnVsDD8jVw80TF4X4CDKVDIrXxhIItNqDVjz7gebUdskAaG3/kmEbMqXHAGrw4zDAyGTmWVeSa9XmKkyeJk69YgzluAV33GugL2amRpd0TYw06mOZWVBhjZ+U6982OjToC9FWCJAxpwsrnIGNY7HyKFf83wsjzLUISVFgrGcNxx4zHap53FCyvmVjw2VAZ3ZnyHRBc0wRM32uUZcSjn1icAYKDzpXNcuJhCFw5owMXCpE/SlxSjzrh5/3thPuM91uDuDoTGd/Xs5UuIjuFokOHcjSt9vRuL6g5jmFB+sfQer7wMyXDBF8Y2T3KirAZ8otNRMSR8Ko/YdX+dgU646dinsE3Qzdjo641g00LUz3RSB0sdQepI1Z6tOa0+JcDb7smlI/fW7STZSGjLHiKPxWvtpxcnch0zOvcZuCwkaZsjOxA4YKY/eCwM+V+TRZ/e8tJAUWwhSVoOmHFlPjjom0GZPcmap82fIlyqVLdo7g=="
+    }
+  }
+}
