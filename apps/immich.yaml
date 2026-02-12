@@ -30,6 +30,12 @@ spec:
               library:
                 existingClaim: immich-library
 
+          controllers:
+            machine-learning:
+              pod:
+                nodeSelector:
+                  workload/ml: "true"
+
           valkey:
             enabled: true
   destination:
