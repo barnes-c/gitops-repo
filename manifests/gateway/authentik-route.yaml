@@ -11,7 +11,7 @@ spec:
       namespace: gateway
       sectionName: https
   hostnames:
-    - authentik.barnes.biz
+    - auth.barnes.biz
   rules:
     - matches:
         - path:
