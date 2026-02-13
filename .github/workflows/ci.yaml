@@ -33,7 +33,7 @@ jobs:
         run: |
           URL="https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"
 
-          docker run --rm -v "$PWD:/work" -w /work ghcr.io/yannh/kubeconform:latest \
+          docker run --rm -v "$PWD:/work" -w /work ghcr.io/yannh/kubeconform:v0.6.7-alpine \
             -strict -summary \
             -schema-location default \
             -schema-location "$URL" \
