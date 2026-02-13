@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         defaultSettings:
-          defaultDataPath: /var/mnt/sda
+          defaultDataPath: /var/mnt/storage
         preUpgradeChecker:
           jobEnabled: false
   destination:
