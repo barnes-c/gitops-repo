@@ -34,9 +34,9 @@ data:
         id: groups-scope
         state: present
         identifiers:
-          scope_name: groups
-        attrs:
           name: "OAuth2 Groups"
+        attrs:
+          scope_name: groups
           description: "User's group memberships"
           expression: |
             return [group.name for group in request.user.ak_groups.all()]
