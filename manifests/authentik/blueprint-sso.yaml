@@ -14,28 +14,29 @@ data:
       - model: authentik_core.group
         id: grafana-admins
         state: present
-        attrs:
+        identifiers:
           name: Grafana Admins
 
       - model: authentik_core.group
         id: grafana-editors
         state: present
-        attrs:
+        identifiers:
           name: Grafana Editors
 
       - model: authentik_core.group
         id: argocd-admins
         state: present
-        attrs:
+        identifiers:
           name: ArgoCD Admins
 
       # Custom scope mapping for groups claim
       - model: authentik_providers_oauth2.scopemapping
         id: groups-scope
         state: present
+        identifiers:
+          scope_name: groups
         attrs:
           name: "OAuth2 Groups"
-          scope_name: groups
           description: "User's group memberships"
           expression: |
             return [group.name for group in request.user.ak_groups.all()]
@@ -44,8 +45,9 @@ data:
       - model: authentik_providers_oauth2.oauth2provider
         id: grafana-provider
         state: present
-        attrs:
+        identifiers:
           name: Grafana
+        attrs:
           authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
           client_type: confidential
           client_id: !Env GRAFANA_CLIENT_ID
@@ -61,9 +63,10 @@ data:
       - model: authentik_core.application
         id: grafana-app
         state: present
+        identifiers:
+          slug: grafana
         attrs:
           name: Grafana
-          slug: grafana
           provider: !KeyOf grafana-provider
           meta_launch_url: https://monitoring.barnes.biz
 
@@ -71,8 +74,9 @@ data:
       - model: authentik_providers_oauth2.oauth2provider
         id: argocd-provider
         state: present
-        attrs:
+        identifiers:
           name: ArgoCD
+        attrs:
           authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
           client_type: confidential
           client_id: !Env ARGOCD_CLIENT_ID
@@ -88,9 +92,10 @@ data:
       - model: authentik_core.application
         id: argocd-app
         state: present
+        identifiers:
+          slug: argocd
         attrs:
           name: ArgoCD
-          slug: argocd
           provider: !KeyOf argocd-provider
           meta_launch_url: https://argo.barnes.biz
 
@@ -98,8 +103,9 @@ data:
       - model: authentik_providers_oauth2.oauth2provider
         id: immich-provider
         state: present
-        attrs:
+        identifiers:
           name: Immich
+        attrs:
           authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
           client_type: confidential
           client_id: !Env IMMICH_CLIENT_ID
@@ -116,8 +122,9 @@ data:
       - model: authentik_core.application
         id: immich-app
         state: present
+        identifiers:
+          slug: immich
         attrs:
           name: Immich
-          slug: immich
           provider: !KeyOf immich-provider
           meta_launch_url: https://immich.barnes.biz
