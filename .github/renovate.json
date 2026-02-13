@@ -35,6 +35,15 @@
         },
         {
             "matchManagers": [
+                "docker"
+            ],
+            "matchDatasources": [
+                "docker"
+            ],
+            "groupName": "docker-images"
+        },
+        {
+            "matchManagers": [
                 "argocd"
             ],
             "groupName": "argocd-apps",
