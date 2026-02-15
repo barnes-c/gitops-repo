@@ -29,9 +29,21 @@ spec:
                     DB_HOSTNAME: immich-postgres
                     DB_PORT: "5432"
                     DB_DATABASE_NAME: immich
+                    IMMICH_CONFIG_FILE: /config/immich.json
                   envFrom:
                     - secretRef:
                         name: immich-postgres-credentials
+
+          persistence:
+            immich-config:
+              type: secret
+              name: immich-config
+              advancedMounts:
+                main:
+                  main:
+                    - path: /config/immich.json
+                      subPath: immich.json
+                      readOnly: true
 
           machine-learning:
             controllers:
