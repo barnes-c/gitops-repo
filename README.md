@@ -72,11 +72,6 @@ kubectl create secret generic <name> \
   > manifests/<app>/sealed-<name>.yaml
 ```
 
-| SealedSecret             | Namespace      | Key            | Purpose                                    |
-|--------------------------|----------------|----------------|--------------------------------------------|
-| `cloudflare-api-token`   | `cert-manager` | `api-token`    | Cloudflare API token for DNS-01 challenges |
-| `cloudflared-tunnel`     | `barnes-biz`   | `TUNNEL_TOKEN` | Cloudflare Tunnel token for public access  |
-
 ## Networking
 
 Traffic is routed via [Cilium Gateway API](https://docs.cilium.io/en/stable/network/servicemesh/gateway-api/gateway-api/):
