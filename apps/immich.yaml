@@ -41,8 +41,7 @@ spec:
               advancedMounts:
                 main:
                   main:
-                    - path: /config/immich.json
-                      subPath: immich.json
+                    - path: /config
                       readOnly: true
 
           machine-learning:
