@@ -30,46 +30,6 @@ data:
           name: ArgoCD Admins
 
       - model: authentik_providers_oauth2.scopemapping
-        id: openid-scope
-        state: present
-        identifiers:
-          name: "Blueprint OpenID"
-        attrs:
-          scope_name: openid
-          description: "OpenID Connect"
-          expression: |
-            return {}
-
-      - model: authentik_providers_oauth2.scopemapping
-        id: email-scope
-        state: present
-        identifiers:
-          name: "Blueprint Email"
-        attrs:
-          scope_name: email
-          description: "Email address"
-          expression: |
-            return {
-                "email": request.user.email,
-                "email_verified": True,
-            }
-
-      - model: authentik_providers_oauth2.scopemapping
-        id: profile-scope
-        state: present
-        identifiers:
-          name: "Blueprint Profile"
-        attrs:
-          scope_name: profile
-          description: "User profile"
-          expression: |
-            return {
-                "name": request.user.name,
-                "given_name": request.user.name,
-                "preferred_username": request.user.username,
-            }
-
-      - model: authentik_providers_oauth2.scopemapping
         id: groups-scope
         state: present
         identifiers:
@@ -94,9 +54,9 @@ data:
           redirect_uris: "https://monitoring.barnes.biz/login/generic_oauth"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
-            - !KeyOf openid-scope
-            - !KeyOf email-scope
-            - !KeyOf profile-scope
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
             - !KeyOf groups-scope
 
       - model: authentik_core.application
@@ -123,9 +83,9 @@ data:
           redirect_uris: "https://argo.barnes.biz/api/dex/callback"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
-            - !KeyOf openid-scope
-            - !KeyOf email-scope
-            - !KeyOf profile-scope
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
             - !KeyOf groups-scope
 
       - model: authentik_core.application
@@ -154,9 +114,9 @@ data:
             app.immich:/
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
-            - !KeyOf openid-scope
-            - !KeyOf email-scope
-            - !KeyOf profile-scope
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+            - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
 
       - model: authentik_core.application
         id: immich-app
