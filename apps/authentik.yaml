@@ -31,8 +31,8 @@ spec:
           server:
             volumes:
               - name: custom-blueprints
-                configMap:
-                  name: authentik-blueprints
+                secret:
+                  secretName: authentik-blueprints
             volumeMounts:
               - name: custom-blueprints
                 mountPath: /blueprints/custom
@@ -40,8 +40,8 @@ spec:
           worker:
             volumes:
               - name: custom-blueprints
-                configMap:
-                  name: authentik-blueprints
+                secret:
+                  secretName: authentik-blueprints
             volumeMounts:
               - name: custom-blueprints
                 mountPath: /blueprints/custom
