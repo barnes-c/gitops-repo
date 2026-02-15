@@ -37,10 +37,12 @@ data:
           name: Grafana
         attrs:
           authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
+          invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
           client_type: confidential
           client_id: !Env GRAFANA_CLIENT_ID
           client_secret: !Env GRAFANA_CLIENT_SECRET
-          redirect_uris: "https://monitoring.barnes.biz/login/generic_oauth"
+          redirect_uris:
+            - "https://monitoring.barnes.biz/login/generic_oauth"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
             - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
@@ -65,10 +67,12 @@ data:
           name: ArgoCD
         attrs:
           authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
+          invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
           client_type: confidential
           client_id: !Env ARGOCD_CLIENT_ID
           client_secret: !Env ARGOCD_CLIENT_SECRET
-          redirect_uris: "https://argo.barnes.biz/api/dex/callback"
+          redirect_uris:
+            - "https://argo.barnes.biz/api/dex/callback"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
             - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
@@ -93,12 +97,13 @@ data:
           name: Immich
         attrs:
           authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-explicit-consent]]
+          invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
           client_type: confidential
           client_id: !Env IMMICH_CLIENT_ID
           client_secret: !Env IMMICH_CLIENT_SECRET
-          redirect_uris: |-
-            https://immich.barnes.biz/auth/login
-            app.immich:/
+          redirect_uris:
+            - "https://immich.barnes.biz/auth/login"
+            - "app.immich:/"
           signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
           property_mappings:
             - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
