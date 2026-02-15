@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://johanneskastl.github.io/helm-charts
     chart: blocky
-    targetRevision: 11.13.0
+    targetRevision: 11.14.0
     helm:
       values: |
         env:
