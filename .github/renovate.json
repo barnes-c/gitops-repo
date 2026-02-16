@@ -26,6 +26,18 @@
             "/manifests/.*\\.yaml$/"
         ]
     },
+    "customManagers": [
+        {
+            "customType": "regex",
+            "fileMatch": [
+                "manifests/monitoring/.*/config\\.json$"
+            ],
+            "matchStrings": [
+                "\"repoURL\":\\s*\"(?<registryUrl>[^\"]+)\",\\s*\"chart\":\\s*\"(?<depName>[^\"]+)\",\\s*\"chartVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "helm"
+        }
+    ],
     "packageRules": [
         {
             "matchManagers": [
