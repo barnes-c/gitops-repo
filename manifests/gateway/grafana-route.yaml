@@ -20,6 +20,6 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: monitoring-grafana
+          name: grafana
           port: 80
           weight: 1
