@@ -1,0 +1,9 @@
+fullnameOverride: postgres-exporter-immich
+
+config:
+  datasource:
+    host: immich-postgres.immich.svc.cluster.local
+    port: "5432"
+    database: immich
+    sslmode: disable
+    existingSecret: postgres-exporter-immich-dsn

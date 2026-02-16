@@ -1,0 +1,6 @@
+{
+  "name": "tempo",
+  "repoURL": "https://grafana.github.io/helm-charts",
+  "chart": "tempo",
+  "chartVersion": "1.24.4"
+}

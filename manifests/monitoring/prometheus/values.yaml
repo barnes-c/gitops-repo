@@ -1,0 +1,25 @@
+fullnameOverride: prometheus
+
+server:
+  retention: 7d
+  persistentVolume:
+    enabled: false
+
+alertmanager:
+  enabled: false
+
+kube-state-metrics:
+  enabled: false
+
+prometheus-node-exporter:
+  enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+extraScrapeConfigs: |
+  - job_name: immich
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - immich-server.immich.svc.cluster.local:8081

@@ -1,0 +1,6 @@
+{
+  "name": "node-exporter",
+  "repoURL": "https://prometheus-community.github.io/helm-charts",
+  "chart": "prometheus-node-exporter",
+  "chartVersion": "4.51.1"
+}

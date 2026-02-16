@@ -1,0 +1,9 @@
+fullnameOverride: postgres-exporter-authentik
+
+config:
+  datasource:
+    host: authentik-postgresql.authentik.svc.cluster.local
+    port: "5432"
+    database: authentik
+    sslmode: disable
+    existingSecret: postgres-exporter-authentik-dsn

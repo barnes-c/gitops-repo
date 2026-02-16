@@ -1,0 +1,6 @@
+{
+  "name": "postgres-exporter-authentik",
+  "repoURL": "https://prometheus-community.github.io/helm-charts",
+  "chart": "prometheus-postgres-exporter",
+  "chartVersion": "7.5.0"
+}

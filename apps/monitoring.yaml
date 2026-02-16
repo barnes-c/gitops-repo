@@ -1,44 +1,61 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: monitoring
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/barnes-c/gitops-repo
+        revision: main
+        files:
+          - path: manifests/monitoring/*/config.json
+  template:
+    metadata:
+      name: "monitoring-{{ .name }}"
+      namespace: argocd
+    spec:
+      project: default
+      sources:
+        - repoURL: "{{ .repoURL }}"
+          chart: "{{ .chart }}"
+          targetRevision: "{{ .chartVersion }}"
+          helm:
+            valueFiles:
+              - $values/manifests/monitoring/{{ .name }}/values.yaml
+        - repoURL: https://github.com/barnes-c/gitops-repo
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: monitoring
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-resources
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
   project: default
-  sources:
-    - repoURL: https://github.com/barnes-c/gitops-repo
-      targetRevision: main
-      path: manifests/monitoring
-    - repoURL: https://prometheus-community.github.io/helm-charts
-      chart: kube-prometheus-stack
-      targetRevision: 82.0.0
-      helm:
-        values: |
-          grafana:
-            enabled: true
-            envFromSecret: grafana-oidc
-            grafana.ini:
-              server:
-                root_url: https://monitoring.barnes.biz
-              auth.generic_oauth:
-                enabled: true
-                name: Authentik
-                allow_sign_up: true
-                client_id: ${GF_AUTH_GENERIC_OAUTH_CLIENT_ID}
-                client_secret: ${GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}
-                scopes: openid profile email
-                auth_url: https://auth.barnes.biz/application/o/authorize/
-                token_url: https://auth.barnes.biz/application/o/token/
-                api_url: https://auth.barnes.biz/application/o/userinfo/
-                role_attribute_path: >-
-                  contains(groups, 'Grafana Admins') && 'Admin' ||
-                  contains(groups, 'Grafana Editors') && 'Editor' ||
-                  'Viewer'
-          prometheus:
-            prometheusSpec:
-              retention: 7d
+  source:
+    repoURL: https://github.com/barnes-c/gitops-repo
+    targetRevision: main
+    path: manifests/monitoring
+    directory:
+      recurse: false
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

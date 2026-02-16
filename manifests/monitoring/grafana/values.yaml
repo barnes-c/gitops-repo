@@ -1,0 +1,56 @@
+fullnameOverride: grafana
+
+plugins:
+  - grafana-strava-datasource
+
+envFromSecrets:
+  - grafana-oidc
+  - grafana-strava
+
+grafana.ini:
+  server:
+    root_url: https://monitoring.barnes.biz
+  auth.generic_oauth:
+    enabled: true
+    name: Authentik
+    allow_sign_up: true
+    client_id: ${GF_AUTH_GENERIC_OAUTH_CLIENT_ID}
+    client_secret: ${GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}
+    scopes: openid profile email
+    auth_url: https://auth.barnes.biz/application/o/authorize/
+    token_url: https://auth.barnes.biz/application/o/token/
+    api_url: https://auth.barnes.biz/application/o/userinfo/
+    role_attribute_path: >-
+      contains(groups, 'Grafana Admins') && 'Admin' ||
+      contains(groups, 'Grafana Editors') && 'Editor' ||
+      'Viewer'
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-server.monitoring.svc.cluster.local
+        access: proxy
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://loki.monitoring.svc.cluster.local:3100
+        access: proxy
+      - name: Tempo
+        type: tempo
+        url: http://tempo.monitoring.svc.cluster.local:3100
+        access: proxy
+        jsonData:
+          tracesToLogsV2:
+            datasourceUid: loki
+          tracesToMetrics:
+            datasourceUid: prometheus
+      - name: Strava
+        type: grafana-strava-datasource
+        access: proxy
+        jsonData:
+          clientID: ${STRAVA_CLIENT_ID}
+        secureJsonData:
+          clientSecret: ${STRAVA_CLIENT_SECRET}
