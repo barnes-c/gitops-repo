@@ -43,7 +43,7 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: http://prometheus-server.monitoring.svc.cluster.local
+        url: http://monitoring-prometheus-server.monitoring.svc.cluster.local
         access: proxy
         isDefault: true
       - name: Loki
