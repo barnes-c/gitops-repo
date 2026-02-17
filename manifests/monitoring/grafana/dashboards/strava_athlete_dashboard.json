@@ -94,7 +94,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -170,7 +170,7 @@
           "activityStat": "moving_time",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "format": "time_series",
           "interval": "no",
@@ -185,7 +185,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -248,7 +248,7 @@
           "activityStat": "distance",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "queryType": "Activities",
           "refId": "A"
@@ -261,7 +261,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -325,7 +325,7 @@
           "activityStat": "moving_time",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "queryType": "Activities",
           "refId": "A"
@@ -338,7 +338,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -402,7 +402,7 @@
           "activityStat": "total_elevation_gain",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "queryType": "Activities",
           "refId": "A"
@@ -415,7 +415,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -577,7 +577,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "format": "time_series",
           "queryType": "Activities",
@@ -588,7 +588,7 @@
           "activityType": "Ride",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "format": "time_series",
           "queryType": "Activities",
@@ -599,7 +599,7 @@
           "activityType": "Other",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "format": "time_series",
           "queryType": "Activities",
@@ -612,7 +612,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -877,7 +877,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "extendedStats": [],
           "fitToTimeRange": true,
@@ -896,7 +896,7 @@
           "activityType": "Ride",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "extendedStats": [],
           "fitToTimeRange": true,
@@ -915,7 +915,7 @@
           "activityType": "Other",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "extendedStats": [],
           "fitToTimeRange": true,
@@ -934,7 +934,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -1393,7 +1393,7 @@
           "activityStat": "distance",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "extendedStats": [
             "achievement_count",
@@ -1439,7 +1439,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -1556,7 +1556,7 @@
           "activityStat": "distance",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "format": "time_series",
           "queryType": "Activities",
@@ -1566,7 +1566,7 @@
           "activityStat": "total_elevation_gain",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "format": "time_series",
           "queryType": "Activities",

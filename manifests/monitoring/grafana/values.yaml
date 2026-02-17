@@ -44,15 +44,18 @@ datasources:
     apiVersion: 1
     datasources:
       - name: Prometheus
+        uid: prometheus
         type: prometheus
         url: http://monitoring-prometheus-server.monitoring.svc.cluster.local
         access: proxy
         isDefault: true
       - name: Loki
+        uid: loki
         type: loki
         url: http://loki.monitoring.svc.cluster.local:3100
         access: proxy
       - name: Tempo
+        uid: tempo
         type: tempo
         url: http://tempo.monitoring.svc.cluster.local:3100
         access: proxy
@@ -62,6 +65,7 @@ datasources:
           tracesToMetrics:
             datasourceUid: prometheus
       - name: Strava
+        uid: strava
         type: grafana-strava-datasource
         access: proxy
         jsonData:

@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -164,7 +164,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "fitToTimeRange": true,
           "queryType": "Activity",
@@ -182,7 +182,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -352,7 +352,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "fitToTimeRange": true,
           "queryType": "Activity",
@@ -371,7 +371,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -522,7 +522,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "fitToTimeRange": true,
           "hide": false,
@@ -541,7 +541,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -726,7 +726,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "fitToTimeRange": true,
           "queryType": "Activity",
@@ -745,7 +745,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -880,7 +880,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "fitToTimeRange": true,
           "hide": false,
@@ -899,7 +899,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "STRAVA"
+        "uid": "strava"
       },
       "fieldConfig": {
         "defaults": {
@@ -1049,7 +1049,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "STRAVA"
+            "uid": "strava"
           },
           "fitToTimeRange": true,
           "hide": false,
@@ -1080,7 +1080,7 @@
         },
         "datasource": {
           "type": "grafana-strava-datasource",
-          "uid": "STRAVA"
+          "uid": "strava"
         },
         "definition": "Strava - activity",
         "includeAll": false,
