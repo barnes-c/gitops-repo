@@ -7,8 +7,16 @@ envFromSecrets:
   - name: grafana-oidc
   - name: grafana-strava
 
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    folderAnnotation: grafana_folder
+
 grafana.ini:
   server:
+    domain: monitoring.barnes.biz
     root_url: https://monitoring.barnes.biz
   auth:
     disable_login_form: true
