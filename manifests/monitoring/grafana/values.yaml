@@ -4,8 +4,8 @@ plugins:
   - grafana-strava-datasource
 
 envFromSecrets:
-  - grafana-oidc
-  - grafana-strava
+  - name: grafana-oidc
+  - name: grafana-strava
 
 grafana.ini:
   server:
