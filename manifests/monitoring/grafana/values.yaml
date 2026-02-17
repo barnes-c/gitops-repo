@@ -63,7 +63,7 @@ datasources:
         type: grafana-strava-datasource
         access: proxy
         jsonData:
-          clientID: "${STRAVA_CLIENT_ID}"
+          clientID: !!str ${STRAVA_CLIENT_ID}
         secureJsonData:
           clientSecret: ${STRAVA_CLIENT_SECRET}
           refreshToken: ${STRAVA_REFRESH_TOKEN}
