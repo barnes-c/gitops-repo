@@ -1,6 +1,7 @@
 fullnameOverride: prometheus
 
 server:
+  fullnameOverride: prometheus
   retention: 7d
   persistentVolume:
     enabled: false

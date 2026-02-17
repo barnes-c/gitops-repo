@@ -46,7 +46,7 @@ datasources:
       - name: Prometheus
         uid: prometheus
         type: prometheus
-        url: http://monitoring-prometheus-server.monitoring.svc.cluster.local
+        url: http://prometheus.monitoring.svc.cluster.local
         access: proxy
         isDefault: true
       - name: Loki
@@ -57,7 +57,7 @@ datasources:
       - name: Tempo
         uid: tempo
         type: tempo
-        url: http://tempo.monitoring.svc.cluster.local:3100
+        url: http://tempo.monitoring.svc.cluster.local:3200
         access: proxy
         jsonData:
           tracesToLogsV2:
