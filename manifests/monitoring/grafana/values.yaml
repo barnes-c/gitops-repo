@@ -3,6 +3,9 @@ fullnameOverride: grafana
 plugins:
   - grafana-strava-datasource
 
+env:
+  GF_PROVISIONING_ENABLE_ENV_EXPANSION: "true"
+
 envFromSecrets:
   - name: grafana-oidc
   - name: grafana-strava
