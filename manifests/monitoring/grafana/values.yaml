@@ -10,6 +10,8 @@ envFromSecrets:
 grafana.ini:
   server:
     root_url: https://monitoring.barnes.biz
+  auth:
+    disable_login_form: true
   auth.generic_oauth:
     enabled: true
     name: Authentik
