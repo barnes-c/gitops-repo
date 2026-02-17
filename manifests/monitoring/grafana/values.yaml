@@ -18,6 +18,8 @@ grafana.ini:
   server:
     domain: monitoring.barnes.biz
     root_url: https://monitoring.barnes.biz
+  security:
+    disable_initial_admin_creation: true
   auth:
     disable_login_form: true
     signout_redirect_url: https://auth.barnes.biz/application/o/grafana/end-session/
