@@ -20,10 +20,12 @@ grafana.ini:
     root_url: https://monitoring.barnes.biz
   auth:
     disable_login_form: true
+    signout_redirect_url: https://auth.barnes.biz/application/o/grafana/end-session/
   auth.generic_oauth:
     enabled: true
     name: Authentik
     allow_sign_up: true
+    auto_login: true
     client_id: ${GF_AUTH_GENERIC_OAUTH_CLIENT_ID}
     client_secret: ${GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}
     scopes: openid profile email
