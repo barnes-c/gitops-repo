@@ -16,6 +16,7 @@ spec:
       values: |
         defaultSettings:
           defaultDataPath: /var/mnt/storage
+          defaultReplicaCount: "1"
         preUpgradeChecker:
           jobEnabled: false
   destination:
