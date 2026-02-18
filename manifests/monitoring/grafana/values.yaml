@@ -1,5 +1,9 @@
 fullnameOverride: grafana
 
+persistence:
+  enabled: true
+  size: 1Gi
+
 plugins:
   - grafana-strava-datasource
 
