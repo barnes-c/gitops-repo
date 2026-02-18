@@ -16,6 +16,8 @@ sidecar:
     label: grafana_dashboard
     labelValue: "1"
     folderAnnotation: grafana_folder
+    provider:
+      foldersFromFilesStructure: true
 
 grafana.ini:
   server:
