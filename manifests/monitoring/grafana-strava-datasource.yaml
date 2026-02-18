@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-strava-datasource
+  namespace: monitoring
+data:
+  strava.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: Strava
+        uid: strava
+        type: grafana-strava-datasource
+        access: proxy
+        jsonData:
+          clientID: "${STRAVA_CLIENT_ID}"
+        secureJsonData:
+          clientSecret: ${STRAVA_CLIENT_SECRET}
+          refreshToken: ${STRAVA_REFRESH_TOKEN}

@@ -3,6 +3,17 @@ fullnameOverride: grafana
 plugins:
   - grafana-strava-datasource
 
+extraVolumes:
+  - name: strava-datasource
+    configMap:
+      name: grafana-strava-datasource
+
+extraVolumeMounts:
+  - name: strava-datasource
+    mountPath: /etc/grafana/provisioning/datasources/strava.yaml
+    subPath: strava.yaml
+    readOnly: true
+
 env:
   GF_PROVISIONING_ENABLE_ENV_EXPANSION: "true"
 
@@ -102,12 +113,3 @@ datasources:
             datasourceUid: loki
           tracesToMetrics:
             datasourceUid: prometheus
-      - name: Strava
-        uid: strava
-        type: grafana-strava-datasource
-        access: proxy
-        jsonData:
-          clientID: !!str ${STRAVA_CLIENT_ID}
-        secureJsonData:
-          clientSecret: ${STRAVA_CLIENT_SECRET}
-          refreshToken: ${STRAVA_REFRESH_TOKEN}
