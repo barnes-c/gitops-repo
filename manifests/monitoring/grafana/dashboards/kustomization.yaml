@@ -9,47 +9,22 @@ labels:
 
 generatorOptions:
   disableNameSuffixHash: true
+  annotations:
+    grafana_folder: Strava
 
 configMapGenerator:
   - name: grafana-dashboard-strava-activity-analysis
     files:
       - strava_activity_analysis.json
-    options:
-      annotations:
-        grafana_folder: Strava
   - name: grafana-dashboard-strava-activity-overview
     files:
       - strava_activity_overview.json
-    options:
-      annotations:
-        grafana_folder: Strava
   - name: grafana-dashboard-strava-athlete-dashboard
     files:
       - strava_athlete_dashboard.json
-    options:
-      annotations:
-        grafana_folder: Strava
   - name: grafana-dashboard-strava-datasource
     files:
       - strava_datasource.json
-    options:
-      annotations:
-        grafana_folder: Strava
   - name: grafana-dashboard-strava-segment-overview
     files:
       - strava_segment_overview.json
-    options:
-      annotations:
-        grafana_folder: Strava
-  - name: grafana-dashboard-node-exporter-full
-    files:
-      - node-exporter-full.json
-    options:
-      annotations:
-        grafana_folder: Infrastructure
-  - name: grafana-dashboard-k8s-views
-    files:
-      - k8s-views-global.json
-    options:
-      annotations:
-        grafana_folder: Kubernetes

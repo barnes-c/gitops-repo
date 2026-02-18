@@ -42,6 +42,39 @@ grafana.ini:
       contains(groups, 'Grafana Editors') && 'Editor' ||
       'Viewer'
 
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: infrastructure
+        orgId: 1
+        folder: Infrastructure
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/infrastructure
+      - name: kubernetes
+        orgId: 1
+        folder: Kubernetes
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/kubernetes
+
+dashboards:
+  infrastructure:
+    node-exporter-full:
+      gnetId: 1860
+      revision: 37
+      datasource: Prometheus
+  kubernetes:
+    k8s-views-pods:
+      gnetId: 15760
+      revision: 37
+      datasource: Prometheus
+
 datasources:
   datasources.yaml:
     apiVersion: 1
