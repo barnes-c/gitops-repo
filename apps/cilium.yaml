@@ -53,15 +53,50 @@ spec:
         gatewayAPI:
           enabled: true
 
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+
         operator:
           replicas: 1
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
 
         hubble:
           enabled: true
           relay:
-            enabled: true
+            enabled: false
+            resources:
+              requests:
+                cpu: 25m
+                memory: 64Mi
+              limits:
+                cpu: 200m
+                memory: 128Mi
           ui:
-            enabled: true
+            enabled: false
+            backend:
+              resources:
+                requests:
+                  cpu: 25m
+                  memory: 64Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi
+            frontend:
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 32Mi
+                limits:
+                  cpu: 100m
+                  memory: 64Mi
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system

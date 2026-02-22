@@ -1,5 +1,13 @@
 fullnameOverride: postgres-exporter-authentik
 
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+
 config:
   datasource:
     host: authentik-postgresql.authentik.svc.cluster.local

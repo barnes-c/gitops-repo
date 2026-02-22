@@ -39,6 +39,13 @@ spec:
                   key: DB_PASSWORD
             - name: POSTGRES_DB
               value: immich
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
           ports:
             - containerPort: 5432
           volumeMounts:

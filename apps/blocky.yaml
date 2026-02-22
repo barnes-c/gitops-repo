@@ -15,6 +15,14 @@ spec:
     targetRevision: 11.14.0
     helm:
       values: |
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+
         env:
           TZ: Europe/Zurich
 

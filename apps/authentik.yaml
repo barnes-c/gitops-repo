@@ -29,6 +29,13 @@ spec:
               password: ""
 
           server:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
             startupProbe:
               periodSeconds: 10
               failureThreshold: 120
@@ -46,6 +53,13 @@ spec:
                 mountPath: /blueprints/custom
 
           worker:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
             startupProbe:
               periodSeconds: 10
               failureThreshold: 120
@@ -70,6 +84,13 @@ spec:
                 adminPasswordKey: AUTHENTIK_POSTGRESQL__PASSWORD
                 userPasswordKey: AUTHENTIK_POSTGRESQL__PASSWORD
             primary:
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
               persistence:
                 enabled: true
                 storageClass: longhorn

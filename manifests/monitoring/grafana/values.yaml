@@ -1,5 +1,13 @@
 fullnameOverride: grafana
 
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
 persistence:
   enabled: true
   size: 1Gi
