@@ -50,9 +50,7 @@ spec:
                 targetPort: 53
 
         metrics:
-          enabled: true
-          serviceMonitor:
-            enabled: false
+          enabled: false
 
         redis:
           enabled: false
