@@ -85,8 +85,7 @@ spec:
     repoURL: https://github.com/barnes-c/gitops-repo
     targetRevision: main
     path: manifests/monitoring/grafana/dashboards
-    directory:
-      recurse: false
+    kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
