@@ -68,6 +68,10 @@ spec:
               cpu: 500m
               memory: 256Mi
 
+        encryption:
+          enabled: true
+          type: wireguard
+
         hubble:
           enabled: true
           relay:
