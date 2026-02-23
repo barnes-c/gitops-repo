@@ -18,7 +18,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: website
-          image: ghcr.io/barnes-c/website:0.5.4@sha256:0dff9dbfb8c079fe0bad6006fa2837e96517190dd209786b70e15fd909077c53
+          image: ghcr.io/barnes-c/website:0.5.5
           ports:
             - containerPort: 8080
           resources:
