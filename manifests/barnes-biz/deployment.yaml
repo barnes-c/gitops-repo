@@ -40,6 +40,25 @@ spec:
               port: 8080
             initialDelaySeconds: 3
             periodSeconds: 5
+          env:
+            - name: SMTP_HOST
+              value: smtp.mail.me.com
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_SECURE
+              value: "false"
+            - name: SMTP_FROM
+              value: "Barnes.biz Contact <website@barnes.biz>"
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-credentials
+                  key: SMTP_USER
+            - name: SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-credentials
+                  key: SMTP_PASS
           securityContext:
             runAsUser: 1001
             runAsNonRoot: true
