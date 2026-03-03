@@ -24,21 +24,21 @@ spec:
           resources:
             requests:
               cpu: 10m
-              memory: 32Mi
-            limits:
-              cpu: 30m
               memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 384Mi
           livenessProbe:
             httpGet:
               path: /
               port: 8080
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /
               port: 8080
-            initialDelaySeconds: 3
+            initialDelaySeconds: 5
             periodSeconds: 5
           env:
             - name: SMTP_HOST
@@ -68,24 +68,8 @@ spec:
               drop:
                 - ALL
           volumeMounts:
-            - name: nginx-cache
-              mountPath: /var/cache/nginx
-            - name: nginx-run
-              mountPath: /var/run
-            - name: nginx-log
-              mountPath: /var/log/nginx
-            - name: nginx-conf
-              mountPath: /etc/nginx/conf.d
             - name: tmp
               mountPath: /tmp
       volumes:
-        - name: nginx-cache
-          emptyDir: {}
-        - name: nginx-run
-          emptyDir: {}
-        - name: nginx-log
-          emptyDir: {}
-        - name: nginx-conf
-          emptyDir: {}
         - name: tmp
           emptyDir: {}
